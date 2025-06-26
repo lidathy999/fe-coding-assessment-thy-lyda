@@ -4,12 +4,14 @@ import React from "react";
 
 type TextFieldProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
   placeholder?: string;
-  type?: "text" | "number" | "password" | "email"; // Added more common input types
-  value?: string | number; // Added value prop for controlled inputs
-  name?: string; // Added name for form handling
-  disabled?: boolean; // Added disabled state
+  type?: "text" | "number" | "password" | "email";
+  value?: string | number;
+  name?: string;
+  disabled?: boolean;
 };
 
 const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
@@ -17,6 +19,8 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     {
       placeholder = "",
       onChange,
+      onBlur,
+      onKeyDown,
       type = "text",
       className = "",
       value,
@@ -32,6 +36,8 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         className={`w-full p-2 border rounded-md ${className}`}
         placeholder={placeholder}
         onChange={onChange}
+        onBlur={onBlur}
+        onKeyDown={onKeyDown}
         type={type}
         value={value}
         name={name}

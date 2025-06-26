@@ -12,8 +12,10 @@ type PropsType = {
     setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
     setEditTask: React.Dispatch<React.SetStateAction<TodoType | null>>;
     setTitle: React.Dispatch<React.SetStateAction<string>>;
+    setEditTitle: React.Dispatch<React.SetStateAction<string>>;
   };
 };
+
 export const useLogic = (props: PropsType) => {
   const { state, helper } = props;
   const getData = async () => {
@@ -58,6 +60,7 @@ export const useLogic = (props: PropsType) => {
         console.log({ data });
         getData();
         helper.setTitle("");
+        helper.setEditTitle("");
         helper.setEditTask(null);
       })
       .catch((err) => console.log(err));
@@ -75,7 +78,6 @@ export const useLogic = (props: PropsType) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log({ data });
         getData();
       })
       .catch((err) => console.log(err));
