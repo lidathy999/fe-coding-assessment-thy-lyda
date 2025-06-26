@@ -48,85 +48,27 @@ const TodoList = () => {
     getData();
   }, []);
 
-  const TodoTitle = ({ todo }: TodoItemPropType) => {
-    if (editTask?.id === todo.id) {
-      return (
-        <TextField
-          type="text"
-          value={editTitle}
-          placeholder="Add a todo"
-          onBlur={() => {
-            setEditTask(null);
-            if (editTask) updateTodo({ ...editTask, title: editTitle });
-          }}
-          onChange={(e: any) => {
-            setEditTitle(e.target.value);
-          }}
-          onKeyDown={(e: any) => {
-            if (e.key === "Enter") {
-              if (editTask) updateTodo({ ...editTask, title: editTitle });
-            }
-          }}
-        />
-      );
-    }
+  const ActionButton = ({ todo }: { todo: TodoType }) => {
+    if (todo.completed) return;
     return (
-      <div
-        className={`text-left ${!todo.completed ? "cursor-pointer" : ""}`}
-        onClick={() => {
-          if (todo.completed) return;
-          setEditTask(todo);
-          setEditTitle(todo.title);
-        }}
-      >
-        {todo.title}
-      </div>
-    );
-  };
-
-  const TodoItem = ({ todo }: TodoItemPropType) => {
-    return (
-      <div
-        key={todo.id}
-        className={`grid grid-cols-[auto_80px] gap-3 rounded-md p-3 border ${borderStyle(
-          todo
-        )}`}
-      >
-        <div className="flex items-center gap-4">
-          <input
-            type="checkBox"
-            aria-label="checkbox"
-            name="done"
-            checked={todo.completed}
-            disabled={todo.completed}
-            className="min-w-4 h-4"
-            onChange={() => {
-              handleChangeCheckBox(todo);
-            }}
-          />
-          <TodoTitle key={todo.id} todo={todo} />
-        </div>
-        {!todo.completed && (
-          <div className="flex justify-end gap-2">
-            <button
-              aria-label="edit"
-              onClick={() => {
-                setEditTask(todo);
-                setEditTitle(todo.title);
-              }}
-            >
-              <EditIcon />
-            </button>
-            <button
-              aria-label="delete"
-              onClick={() => {
-                deleteTodo(todo);
-              }}
-            >
-              <DeleteIcon />
-            </button>
-          </div>
-        )}
+      <div className="flex justify-end gap-2">
+        <button
+          aria-label="edit"
+          onClick={() => {
+            setEditTask(todo);
+            setEditTitle(todo.title);
+          }}
+        >
+          <EditIcon />
+        </button>
+        <button
+          aria-label="delete"
+          onClick={() => {
+            deleteTodo(todo);
+          }}
+        >
+          <DeleteIcon />
+        </button>
       </div>
     );
   };
@@ -155,7 +97,61 @@ const TodoList = () => {
       </form>
       <div className="grid gap-4">
         {todos.map((todo: any) => (
-          <TodoItem key={todo.id} todo={todo} />
+          <div
+            key={todo.id}
+            className={`grid grid-cols-[auto_80px] gap-3 rounded-md p-3 border ${borderStyle(
+              todo
+            )}`}
+          >
+            <div className="flex items-center gap-4">
+              <input
+                type="checkBox"
+                aria-label="checkbox"
+                name="done"
+                checked={todo.completed}
+                disabled={todo.completed}
+                className="min-w-4 h-4"
+                onChange={() => {
+                  handleChangeCheckBox(todo);
+                }}
+              />
+              {(editTask?.id === todo.id) 
+              ? (
+                <TextField
+                  type="text"
+                  value={editTitle}
+                  placeholder="Add a todo"
+                  onBlur={() => {
+                    if (editTask) updateTodo({ ...editTask, title: editTitle });
+                  }}
+                  onChange={(e: any) => {
+                    setEditTitle(e.target.value);
+                  }}
+                  onKeyDown={(e: any) => {
+                    if (e.key === "Enter") {
+                      if (editTask)
+                        updateTodo({ ...editTask, title: editTitle });
+                    }
+                  }}
+                />
+              ) 
+              : (
+                <div
+                  className={`text-left ${
+                    !todo.completed ? "cursor-pointer" : ""
+                  }`}
+                  onClick={() => {
+                    if (todo.completed) return;
+                    setEditTask(todo);
+                    setEditTitle(todo.title);
+                  }}
+                >
+                  {todo.title}
+                </div>
+              )}
+            </div>
+            <ActionButton key={todo.id} todo={todo} />
+          </div>
         ))}
       </div>
     </div>
