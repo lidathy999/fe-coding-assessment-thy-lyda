@@ -7,6 +7,8 @@ type TodoType = {
 type PropsType = {
   state: {
     title: string;
+    editTask: TodoType | null;
+    editTitle: string;
   };
   helper: {
     setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
@@ -18,6 +20,7 @@ type PropsType = {
 
 export const useLogic = (props: PropsType) => {
   const { state, helper } = props;
+  const { title, editTask, editTitle } = state;
   const getData = async () => {
     const response = await fetch("/api/todos")
       .then((res) => res.json())
@@ -32,7 +35,7 @@ export const useLogic = (props: PropsType) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title: state.title }),
+      body: JSON.stringify({ title: title }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -56,8 +59,7 @@ export const useLogic = (props: PropsType) => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log({ data });
+      .then(() => {
         getData();
         helper.setTitle("");
         helper.setEditTitle("");
@@ -87,11 +89,31 @@ export const useLogic = (props: PropsType) => {
     updateTodo(todo, "completed");
   };
 
+  const handleOnBlur = () => {
+    if (editTask && editTask.title !== editTitle) {
+      updateTodo({ ...editTask, title: editTitle });
+      return;
+    }
+    helper.setEditTask(null);
+  };
+
+  const handleOnKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && editTask) {
+      if (editTask.title !== editTitle) {
+        updateTodo({ ...editTask, title: editTitle });
+        return;
+      }
+      helper.setEditTask(null);
+    }
+  };
+
   return {
     handleChangeCheckBox,
     deleteTodo,
     updateTodo,
     createTodo,
     getData,
+    handleOnBlur,
+    handleOnKeyDown,
   };
 };

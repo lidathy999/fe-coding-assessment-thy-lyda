@@ -12,6 +12,7 @@ type TextFieldProps = {
   value?: string | number;
   name?: string;
   disabled?: boolean;
+  autoFocus?: boolean;
 };
 
 const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
@@ -25,6 +26,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       className = "",
       value,
       name,
+      autoFocus,
       disabled = false,
       ...props
     },
@@ -41,6 +43,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         type={type}
         value={value}
         name={name}
+        autoFocus={autoFocus}
         disabled={disabled}
         {...props}
       />
