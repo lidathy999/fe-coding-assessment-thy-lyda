@@ -104,7 +104,7 @@ const TodoList = () => {
       </form>
 
       <div className="grid gap-4">
-        {todos.toReversed().map((todo: TodoType) => (
+        {todos.reverse().map((todo: TodoType) => (
           <div
             key={todo.id}
             className={`grid grid-cols-[auto_80px] gap-3 rounded-md p-3 border ${borderStyle(
