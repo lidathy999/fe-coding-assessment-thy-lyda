@@ -38,8 +38,7 @@ export const useLogic = (props: PropsType) => {
       body: JSON.stringify({ title: title }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log({ data });
+      .then(() => {
         getData();
         helper.setTitle("");
       })
@@ -79,7 +78,7 @@ export const useLogic = (props: PropsType) => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then(() => {
         getData();
       })
       .catch((err) => console.log(err));

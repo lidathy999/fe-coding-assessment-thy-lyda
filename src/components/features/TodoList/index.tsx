@@ -1,5 +1,5 @@
 "use client";
-import { NextResponse } from "next/server";
+
 import { useEffect, useState } from "react";
 
 import TextField from "@/components/ui/TextField";
@@ -49,7 +49,7 @@ const TodoList = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
   const ActionButtons = ({ todo }: { todo: TodoType }) => {
     return (
