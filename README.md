@@ -6,8 +6,6 @@ This is a full-stack CRUD To-Do List App built with **Next.js (App Router)**. It
 
 ## 📌 Overview
 
-This assessment is designed to evaluate your frontend skills in the following areas:
-
 - Creating a structure, component-based UI
 - Handling asynchronous data with API endpoints
 - Implementing CRUD operations (Create, Read, Update, Delete)
