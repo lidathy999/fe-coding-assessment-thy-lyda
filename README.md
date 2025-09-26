@@ -22,7 +22,7 @@ This is a full-stack CRUD To-Do List App built with **Next.js (App Router)**. It
 
 ### Setup 
 
-2. **Clone your forked repository**
+`*2. **Clone your forked repository***`
 
 ### Install dependencies
 
