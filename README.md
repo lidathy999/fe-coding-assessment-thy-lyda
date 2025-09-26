@@ -20,10 +20,6 @@ This is a full-stack CRUD To-Do List App built with **Next.js (App Router)**. It
 
 - Node.js (v20 or later)
 
-### Setup 
-
-`*2. **Clone your forked repository***`
-
 ### Install dependencies
 
 ```bash
